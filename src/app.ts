@@ -1,13 +1,34 @@
 import express from 'express';
+import rateLimit from 'express-rate-limit';
+import cors from 'cors';
 
-import testRoute from './routes/test';
+import userRoutes from './routes/user';
+import { errorHandler } from './middleware/error';
 
+const PORT = 5000;
 const app = express();
 
 app.use(express.json());
 
-app.use('/api/v1/test', testRoute);
+let corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200,
+};
 
-app.listen(5000, () => {
-  console.log('Server running on Port 5000');
+app.use(cors(corsOptions));
+
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 mins
+  max: 200,
 });
+app.use(limiter);
+
+app.use('/api/v1/user', userRoutes);
+
+app.use(errorHandler);
+
+app.listen(PORT, () => {
+  console.log(`Server running on Port ${PORT}`);
+});
+
+export default app;

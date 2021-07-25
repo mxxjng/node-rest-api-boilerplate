@@ -34,6 +34,8 @@ $ docker-compose up
 $ npm run prisma:migrate
 ```
 
+!!! (when prisma studio is not updated correctly by the schema delete the docker image completely and/or change the database to connect to)
+
 ## Workflow
 
 1. Run Local Database
@@ -50,7 +52,19 @@ $ npm run dev
 
 ## Testing
 
-coming sooon...
+1. Run all tests
+
+```shell
+$ npm run test
+```
+
+## Building
+
+1. compile typescript to javascript (some ts errors might occur but the project gets still build)
+
+```shell
+$ npm run build
+```
 
 ## Deployment
 

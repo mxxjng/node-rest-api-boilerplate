@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: saas
+      POSTGRES_DB: test
     # Make sure log colors show up correctly
     tty: true
 
@@ -21,7 +21,7 @@ services:
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: postgres://postgres:postgres@postgres:5432/saas
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/test
     ports:
       - '5555:5555'
     # Make sure log colors show up correctly
