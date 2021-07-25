@@ -1,9 +1,24 @@
 import express from 'express';
 import rateLimit from 'express-rate-limit';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import swaggerJSDoc from 'swagger-jsdoc';
 
 import userRoutes from './routes/user';
 import { errorHandler } from './middleware/error';
+
+const options = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Hello World',
+      version: '1.0.0',
+    },
+  },
+  apis: ['**/*.ts'], // files containing annotations as above
+};
+
+const swaggerSpec = swaggerJSDoc(options);
 
 const PORT = 5000;
 const app = express();
@@ -22,6 +37,8 @@ const limiter = rateLimit({
   max: 200,
 });
 app.use(limiter);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/api/v1/user', userRoutes);
 
